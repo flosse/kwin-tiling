@@ -44,6 +44,21 @@ function Layout(screenRectangle) {
 
 Layout.prototype.setLayoutArea = function(area) {
     var oldArea = this.screenRectangle;
-    this.screenRectangle = area;
     this.onLayoutAreaChange(oldArea, area);
+}
+
+Layout.prototype.onLayoutAreaChange = function(oldArea, newArea) {
+	var xoffset = newArea.x - oldArea.x;
+	var yoffset = newArea.y - oldArea.y;
+	var wscale  = newArea.width / oldArea.width;
+	var hscale  = newArea.height / oldArea.height;
+	print(oldArea.width, newArea.width);
+	this.tiles.forEach(function(tile) {
+		var newRect = Qt.rect(tile.rectangle.x + xoffset,
+							  tile.rectangle.y + yoffset,
+							  tile.rectangle.width * wscale,
+							  tile.rectangle.height * hscale);
+		tile.rectangle = newRect;
+	});
+	this.screenRectangle = newArea;
 }

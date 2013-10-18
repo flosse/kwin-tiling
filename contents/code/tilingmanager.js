@@ -139,6 +139,9 @@ function TilingManager() {
     workspace.currentDesktopChanged.connect(function() {
         self._onCurrentDesktopChanged();
     });
+	workspace.screenResized.connect(function(screen) {
+		self._onScreenResize(screen);
+	});
     // Register keyboard shortcuts
     registerShortcut("Next Tiling Layout",
                      "Next Tiling Layout",
@@ -282,6 +285,22 @@ TilingManager.prototype._getCurrentLayoutType = function() {
     var currentLayout = this.layouts[this._currentDesktop][this._currentScreen];
     return currentLayout.layoutType;
 };
+
+TilingManager.prototype._onScreenResize = function(screen) {
+	print("Screen resizing - please restart kwin or the tiling script for now");
+	/*
+	try {
+		for(i = 0; i< this.layouts.length; i++) {
+			var area = TilingManager.getTilingArea(i, screen);
+			print(this.layouts[i]);
+			this.layouts[i][screen].setLayoutArea(area);
+			print("Screen resized");
+		}
+	} catch(err) {
+		print(err, "in TilingManager._onScreenResize");
+	}
+	*/
+}
 
 TilingManager.prototype._onTileAdded = function(tile) {
     // Add tile callbacks which are needed to move the tile between different
